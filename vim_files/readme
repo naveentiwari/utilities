@@ -1,0 +1,42 @@
+This folder includes vim related helper files (files are properly commented for ease of reading).
+
+gtk2fontsize.vim -  This file contains font related helpers.
+    How to use?
+        <F10>   = larger font
+        <S-F10> = smaller font
+        <F9>    = Use next font (currently there are only two fonts, you can increase
+                  them as per your system.
+        <S-F9>  = Use previous font.
+
+misc.vim -          This file contains some important misc setting like
+                    switching between .h, .c. Mapping leader to ','.
+
+vim_hlpr_fn.vim -   This file contains utilities that are required to navigate
+                    big code bases. Install ctags, cscope to use them.
+
+    How to use?
+    Run command 'ReDoListing'
+        - this will create cscope and tag files.
+        - cscope and tags can be used in regular was like using 'ts' for tag search
+        References Search:
+          <C-F>r    = Find all the refernces to word under cursor.
+                      This will divide the screen into 2 horizontal section
+                      the lower section is divided into two more vertical section.
+                      bottom left = quickfix window - shows lines where the reference exists
+                      bottom right = snippet window - show few lines of code where it is referenced
+                      top = main window
+          <C-N>     = Move to next reference.
+          <C-P>     = Move to previous reference.
+          <C-I>m    = Open the snippet code on main screen.
+          <S-ESC>   = to close the snippet and quickfix window.
+        Normal Search:
+          <C-F>s    = specifiy the keyword to be searched and the directory
+          <C-F>c    = search for the word currently under cursor in current directory
+          This will split the window just as reference searching and you can navigate
+          using the same keys.
+
+vimrc - This contains few useful vim setting. You can go through it and pick and choose
+        what you like or use the whole thing.
+
+How to use so many files?
+    Include them all in you .vimrc (_vimrc for windows) file and you are all set to go.

@@ -1,0 +1,158 @@
+" allow the unsaved buffers to be hidden
+set hidden
+" set the theme to desert
+colorscheme desert
+ 
+" change the swap and backup directories
+set backupdir=~/.myconfig/vimfiles/backup
+set directory=~/.myconfig/vimfiles/swap
+ 
+" set shortmess=a
+set cmdheight=1
+ 
+" === Tab and newline behavior ===
+" Auto-indent after newline (ai)
+set autoindent
+" Expand tabs to spaces (et)
+set expandtab
+" Set the shift width, for block indenting/unindenting (sw)
+set shiftwidth=4
+" Smart-indent behavior (si) after newline (works best with code)
+set smartindent
+" Backspace will delete this many spaces instead of just one (sts)
+set softtabstop=4
+" Set tab width (ts)
+set tabstop=4
+" Use smart case for searching (scs)
+set smartcase
+
+" do not highlight search results
+set nohlsearch
+" make vim case insensitive
+set ignorecase
+" Turn on incremental search (is)
+set incsearch
+" Show status line (ls): 0 (never), 1 (only when >1 window open), 2 (always)
+set laststatus=2
+" Keep longer history of commands (hi)
+set history=1000
+" set the number of lines to 999 to remove problems
+set lines=999
+
+" Set gui options
+" remove the right scrollbar
+set guioptions-=r
+" remove the left scrollbar
+set guioptions-=L
+" remove the bottom scrollbar
+set guioptions-=b
+set guioptions+=c
+set guioptions-=m
+set guioptions-=T
+
+" split options
+set splitright
+" set autoread
+set autoread
+
+:silent !mkdir -p ~/.myconfig/vimfiles/undo > /dev/null 2>&1
+:silent !mkdir -p ~/.myconfig/vimfiles/backup > /dev/null 2>&1
+:silent !mkdir -p ~/.myconfig/vimfiles/swap > /dev/null 2>&1
+
+if exists("+undofile")
+  " undofile - This allows you to use undos after exiting and restarting
+  " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
+  " :help undo-persistence
+  " This is only present in 7.3+
+    set undodir=~/.myconfig/vimfiles/undo//
+    set undofile
+endif
+
+" format the staus line
+set statusline=
+set statusline+=%<\                       " cut at start
+set statusline+=%2*[%n%H%M%R%W]%*\        " flags and buf no
+set statusline+=%t\                        " path
+set statusline+=%=%1*%y%*%*\              " file type
+set statusline+=%10((%l,%c)%)\            " line and column
+set statusline+=%P                        " percentage of file
+
+" replace . with arrow
+nnoremap -          r-a><Esc>
+
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+" === configuration for OmniCppComplete
+" OmniCppComplete
+let OmniCpp_NamespaceSearch     = 1
+let OmniCpp_GlobalScopeSearch   = 1
+let OmniCpp_ShowAccess          = 1
+let OmniCpp_ShowPrototypeInAbbr = 1                         " show function parameters
+let OmniCpp_MayCompleteDot      = 1                         " autocomplete after .
+let OmniCpp_MayCompleteArrow    = 1                         " autocomplete after ->
+let OmniCpp_MayCompleteScope    = 1                         " autocomplete after ::
+let OmniCpp_DefaultNamespaces   = ["std", "_GLIBCXX_STD"]
+
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+" set completeopt=menuone,menu,longest,preview
+
+" === comment helpers ===
+" set the author name
+let g:DoxygenToolkit_authorName="<Name here>"
+
+" map ; to : for ease
+nmap ; :
+
+" ============================
+augroup myvimrc
+    au!
+    au BufWritePost .vimrc so $HOME/.vimrc
+augroup END
+
+" === Make the vim quite ===
+" stop the bell sound
+set noerrorbells
+" stop the visual errors also
+set novisualbell
+
+" === Abbreviations ===
+ab  #i          #include
+ab  #d          #define
+ab  #n          #ifndef
+ab  #e          #endif //
+ab  pf          printf ("");<Left><Left><Left>
+"
+ab  teh         the
+
+" ============================ insert mode ===================================
+
+inoremap <C-0>      <C-O>I
+
+" ============================ normal mode ===================================
+
+nnoremap    <C-F>o          :cs f f 
+
+nnoremap    <C-I>h          :set invcursorline<CR>
+
+" vim level and buffer manipulation maps
+" save and quit
+nnoremap    <C-I>q     :wa<CR>:quit<CR>
+" hide trailing newline character from file
+nnoremap    <C-I>f     :ed ++ff=unix %<CR>
+
+" === Map the function keys ===
+" close the current buffer
+nnoremap <silent> <F4>       :bd<CR>
+nnoremap <silent> <S-F4>     :bw<CR>
+
+nnoremap <silent> <F3>       :so $HOME/.vimrc<CR>
+nnoremap <silent> <S-F3>     :e $HOME/.vimrc<CR>
+" <F6> mapped to opening the $VIM in explorer
+nnoremap <silent> <F7>       :ReCscope<CR>
+nnoremap <silent> <S-F7>     :ReLoadCscope<CR>
+nnoremap <silent> <C-F7>     :ReTag<CR>
+nnoremap <silent> <C-S-F7>   :ReDoListing<CR>
+nnoremap <F5>                :buffers<CR>:buffer<Space>
+"nnoremap <C-B>               :IndentCFormat<CR>
+nnoremap <S-B>               :%!astyle -dHcp
