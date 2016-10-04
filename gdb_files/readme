@@ -1,0 +1,12 @@
+What does it do?
+It will generate all the functions that are called during the debugging and log it in the
+specified file. While logging it will move through code automatically.
+
+How to use?
+Open 'rtt.py' and specify the file ('fnexcl.res') path. Search for 'exclusion_file' variable.
+In your .gdbinit file (create if not there) located in you home directory add the following:
+source <location to rtt.py>
+
+Start gdb
+    - Reach the position that you want the logging to start
+    - run 'rtt <file name>' in gdb. This might take some time if your code is long.
